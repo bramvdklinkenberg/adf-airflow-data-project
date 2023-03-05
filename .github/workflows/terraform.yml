@@ -121,4 +121,8 @@ jobs:
           ARM_CLIENT_SECRET: ${{ env.ARM_CLIENT_SECRET }}
           ARM_SUBSCRIPTION_ID: ${{ env.ARM_SUBSCRIPTION_ID }}
           ARM_TENANT_ID: ${{ env.ARM_TENANT_ID }}
+      - name: Delete Artifacts
+        uses: geekyeggo/delete-artifact@v2
+        with:
+          name: ${{ env.ENV }}-tfplan
 
