@@ -34,4 +34,5 @@ terraform plan \
     -var "storage_account_humiditydata_name=${STORAGE_ACCOUNT_HUMIDITYDATA_NAME}" \
     -var "storage_account_humiditydata_container_name=${STORAGE_ACCOUNT_HUMIDITYDATA_CONTAINER_NAME}" \
     -var "project_name=${PROJECT_NAME}" \
+    -var "postgresql_connection_string=${POSTGRESQL_CONNECTION_STRING}" \
     -out "${ENV}-tfplan"

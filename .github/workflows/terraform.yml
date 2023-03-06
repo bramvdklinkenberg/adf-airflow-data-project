@@ -30,7 +30,8 @@ env:
   ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
   RESOURCE_GROUP_NAME: 'data-project-humidity-home-rg'
   LOCATION: 'West Europe'
-  PROJECT_NAME: 'data-project-humidity-adf' 
+  PROJECT_NAME: 'data-project-humidity'
+  POSTGRESQL_CONNECTION_STRING: ${{ secrets.POSTGRESQL_CONNECTION_STRING }}
 
 jobs:
   terraform_plan:
@@ -67,35 +68,6 @@ jobs:
           name: ${{ env.ENV }}-tfplan
           path: infra/terraform/${{ env.ENV }}-tfplan
           if-no-files-found: error
-      - name: Update Pull Request
-        uses: actions/github-script@v6
-        if: github.event_name == 'pull_request'
-        env:
-          PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
-            #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
-            #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
-            #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
-
-            <details><summary>Show Plan</summary>
-
-            \`\`\`\n
-            ${process.env.PLAN}
-            \`\`\`
-
-            </details>
-
-            *Pushed by: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
-
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: output
-            })
 
 
   terraform_apply:

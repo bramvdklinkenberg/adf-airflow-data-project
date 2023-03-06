@@ -21,5 +21,10 @@ variable "storage_account_humiditydata_container_name" {
     sensitive = true
 }
 
+variable "postgresql_connection_string" {
+    type = string
+    sensitive = true
+}
+
 
 
