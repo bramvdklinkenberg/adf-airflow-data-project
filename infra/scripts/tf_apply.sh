@@ -2,7 +2,7 @@
 set -e
 set -o pipefail
 
-export STORAGE_ACCOUNT_NAME="${STORAGE_ACCOUNT_NAME}"
+export STORAGE_ACCOUNT_TFSTATE_NAME="${STORAGE_ACCOUNT_TFSTATE_NAME}"
 export ARM_CLIENT_ID="${ARM_CLIENT_ID}"
 export ARM_CLIENT_SECRET="${ARM_CLIENT_SECRET}"
 export ARM_SUBSCRIPTION_ID="${ARM_SUBSCRIPTION_ID}"
@@ -17,10 +17,10 @@ cd "${FULL_SCRIPT_PATH}/../terraform"
 
 echo 'terraform init'
 terraform init \
-    -backend-config="storage_account_name=${STORAGE_ACCOUNT_NAME}" \
+    -backend-config="storage_account_name=${STORAGE_ACCOUNT_TFSTATE_NAME}" \
     -backend-config="subscription_id=${ARM_SUBSCRIPTION_ID}" \
     -backend-config="resource_group_name=${RESOURCE_GROUP_NAME}" \
-    -backend-config="storage_account_name=${STORAGE_ACCOUNT_NAME}"
+    -backend-config="container_name=${STORAGE_ACCOUNT_TFSTATE_CONTAINER_NAME}"
 
 echo 'Selecting terraform workspace'
 terraform workspace select "${ENV}"

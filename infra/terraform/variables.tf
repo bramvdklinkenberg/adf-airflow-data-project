@@ -11,12 +11,15 @@ variable "resource_group_name" {
     type = string
 }
 
-variable "storage_account_name" {
+variable "storage_account_humiditydata_name" {
     type = string
+    sensitive = true
 }
 
-variable "subscription_id" {
+variable "storage_account_humiditydata_container_name" {
     type = string
+    sensitive = true
 }
+
 
 
