@@ -16,7 +16,7 @@ resource "azurerm_data_factory_linked_service_azure_blob_storage" "humidity_data
 }
 
 resource "azurerm_data_factory_linked_service_postgresql" "weather_data" {
-    name              = data.azurerm_postgresql_server.data_project_db.name
+    name              = "${var.project_name}-db"
     data_factory_id   = azurerm_data_factory.data_project_adf.id
     connection_string = var.postgresql_connection_string
 }
