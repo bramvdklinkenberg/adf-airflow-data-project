@@ -26,5 +26,16 @@ variable "postgresql_connection_string" {
     sensitive = true
 }
 
+variable "storage_account_airflow_name" {
+    type = string
+    sensitive = true
+}
 
+variable "storage_account_airflow_container_name" {
+    type = string
+}
 
+variable "container_access_type" {
+    type = string
+    default = "private"
+}

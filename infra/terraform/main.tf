@@ -3,6 +3,7 @@ data "azurerm_storage_account" "humidity_data" {
     resource_group_name = var.resource_group_name
 }
 
+
 resource "azurerm_data_factory" "data_project_adf" {
     name                = "${var.project_name}-adf"
     location            = var.location
@@ -44,4 +45,18 @@ resource "azapi_resource" "adf_airflow" {
             }
         }
     })
+}
+
+resource "azurerm_storage_account" "airflow" {
+    name                     = var.storage_account_airflow_name
+    resource_group_name      = var.resource_group_name
+    location                 = var.location
+    account_tier             = "Standard"
+    account_replication_type = "LRS"
+}
+
+resource "azurerm_storage_container" "dags" {
+    name                  = var.storage_account_airflow_container_name
+    storage_account_name  = azurerm_storage_account.airflow_dags.name
+    container_access_type = var.container_access_type
 }
