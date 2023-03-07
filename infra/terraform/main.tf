@@ -57,6 +57,6 @@ resource "azurerm_storage_account" "airflow" {
 
 resource "azurerm_storage_container" "dags" {
     name                  = var.storage_account_airflow_container_name
-    storage_account_name  = azurerm_storage_account.airflow_dags.name
+    storage_account_name  = azurerm_storage_account.airflow.name
     container_access_type = var.container_access_type
 }
