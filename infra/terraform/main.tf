@@ -20,3 +20,28 @@ resource "azurerm_data_factory_linked_service_postgresql" "weather_data" {
     data_factory_id   = azurerm_data_factory.data_project_adf.id
     connection_string = var.postgresql_connection_string
 }
+
+resource "azapi_resource" "adf_airflow" {
+    type = "Microsoft.DataFactory/factories/integrationRuntimes@2018-06-01"
+    name = "${var.project_name}-adf-airflow"
+    parent_id = azurerm_data_factory.data_project_adf.id
+    schema_validation_enabled = false
+
+    body = jsonencode({
+        properties = {
+            type = "Airflow"
+            typeProperties = {
+                computeProperties = {
+                    location = "West Europe"
+                    computeSize = "Small"
+                    extraNodes = 0
+                }
+                airflowProperties = {
+                    version = "2.2.2"
+                    enableAADIntegration = true
+                    airflowRequiredArguments = ["airflow.providers.microsoft.azure"]
+                }
+            }
+        }
+    })
+}
