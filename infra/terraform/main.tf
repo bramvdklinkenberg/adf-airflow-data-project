@@ -25,13 +25,10 @@ resource "azapi_resource" "adf_airflow" {
     type = "Microsoft.DataFactory/factories/integrationRuntimes@2018-06-01"
     name = "${var.project_name}-adf-airflow"
     parent_id = azurerm_data_factory.data_project_adf.id
-    depends_on = [
-        azurerm_data_factory.data_project_adf
-    ]
+    schema_validation_enabled = false
 
     body = jsonencode({
         properties = {
-            description = "Managed Airflow integration runtime"
             type = "Airflow"
             typeProperties = {
                 computeProperties = {
