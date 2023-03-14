@@ -37,4 +37,8 @@ terraform plan \
     -var "postgresql_connection_string=${POSTGRESQL_CONNECTION_STRING}" \
     -var "storage_account_airflow_name=${STORAGE_ACCOUNT_AIRFLOW_NAME}" \
     -var "storage_account_airflow_container_name=${STORAGE_ACCOUNT_AIRFLOW_CONTAINER_NAME}" \
+    -var "client_id=${ARM_CLIENT_ID}" \
+    -var "client_secret=${ARM_CLIENT_SECRET}" \
+    -var "tenant_id=${ARM_TENANT_ID}" \
+    -var "subscription_id=${ARM_SUBSCRIPTION_ID}" \
     -out "${ENV}-tfplan"

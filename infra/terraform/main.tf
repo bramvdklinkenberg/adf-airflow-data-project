@@ -22,6 +22,11 @@ resource "azurerm_data_factory_linked_service_postgresql" "weather_data" {
     connection_string = var.postgresql_connection_string
 }
 
+data "azurerm_key_vault" "data_project_kv" {
+    name                = "${var.project_name}-kv"
+    resource_group_name = var.resource_group_name
+}
+
 resource "azapi_resource" "adf_airflow" {
     type = "Microsoft.DataFactory/factories/integrationRuntimes@2018-06-01"
     name = "${var.project_name}-adf-airflow"
@@ -31,16 +36,24 @@ resource "azapi_resource" "adf_airflow" {
     body = jsonencode({
         properties = {
             type = "Airflow"
+            description = "Airflow integration runtime"
             typeProperties = {
                 computeProperties = {
-                    location = "West Europe"
-                    computeSize = "Small"
+                    location = var.location
+                    computeSize = var.airflow_compute_size
                     extraNodes = 0
                 }
                 airflowProperties = {
-                    version = "2.2.2"
+                    environmentVariables = {
+                        project = var.project_name
+                        client_id = var.client_id
+                    }
+                    airflowVersion = var.airflow_version
                     enableAADIntegration = true
-                    airflowRequiredArguments = ["airflow.providers.microsoft.azure"]
+                    airflowRequiredArguments = ["apache-airflow-providers-microsoft-azure"]
+                    airflowEntityReferences = []
+                    encryptedSecrets = []
+                    secrets = []
                 }
             }
         }

@@ -39,3 +39,33 @@ variable "container_access_type" {
     type = string
     default = "private"
 }
+
+variable "client_id" {
+    type = string
+    sensitive = true
+}
+
+variable "client_secret" {
+    type = string
+    sensitive = true
+}
+
+variable "tenant_id" {
+    type = string
+    sensitive = true
+}
+
+variable "subscription_id" {
+    type = string
+    sensitive = true
+}
+
+variable "airflow_compute_size" {
+    type = string
+    default = "Small"
+}
+
+variable "airflow_version" {
+    type = string
+    default = "2.4.3"
+}
