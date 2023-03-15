@@ -73,3 +73,9 @@ resource "azurerm_storage_container" "dags" {
     storage_account_name  = azurerm_storage_account.airflow.name
     container_access_type = var.container_access_type
 }
+
+resource "azurerm_data_factory_linked_service_azure_blob_storage" "airflow_dags" {
+    name = azurerm_storage_account.airflow.name
+    data_factory_id = azurerm_data_factory.data_project_adf.id
+    connection_string = azurerm_storage_account.airflow.primary_connection_string
+}
