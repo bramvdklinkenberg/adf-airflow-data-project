@@ -15,9 +15,11 @@ dag = DAG(
     schedule_interval='@hourly',
 )
 
+
 def print_env_vars():
     import os
     print(os.environ)
+
 
 print_env_vars_task = PythonOperator(
     task_id='print_env_vars_task',
