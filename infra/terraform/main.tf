@@ -64,6 +64,7 @@ resource "azurerm_storage_account" "airflow" {
     name                     = var.storage_account_airflow_name
     resource_group_name      = var.resource_group_name
     location                 = var.location
+    account_kind             = "BlobStorage"
     account_tier             = "Standard"
     account_replication_type = "LRS"
 }
@@ -72,6 +73,16 @@ resource "azurerm_storage_container" "dags" {
     name                  = var.storage_account_airflow_container_name
     storage_account_name  = azurerm_storage_account.airflow.name
     container_access_type = var.container_access_type
+}
+
+resource "azurerm_storage_blob" "dags" {
+    for_each = fileset("${path.module}/../apache-airflow/dags/azure_data_dude/etl_dags/", "*_test_dag.py")
+
+    name                   = "airflow/dags/${each.key}"
+    storage_account_name   = azurerm_storage_account.airflow.name
+    storage_container_name = azurerm_storage_container.dags.name
+    type                   = "Block"
+    source                 = "${path.module}/../apache-airflow/dags/azure_data_dude/etl_dags/${each.key}"
 }
 
 resource "azurerm_data_factory_linked_service_azure_blob_storage" "airflow_dags" {
