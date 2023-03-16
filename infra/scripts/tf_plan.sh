@@ -41,4 +41,5 @@ terraform plan \
     -var "client_secret=${ARM_CLIENT_SECRET}" \
     -var "tenant_id=${ARM_TENANT_ID}" \
     -var "subscription_id=${ARM_SUBSCRIPTION_ID}" \
+    -var "workspace=${GITHUB_WORKSPACE}" \
     -out "${ENV}-tfplan"

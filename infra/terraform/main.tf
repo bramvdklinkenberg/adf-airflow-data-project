@@ -76,13 +76,11 @@ resource "azurerm_storage_container" "dags" {
 }
 
 resource "azurerm_storage_blob" "dags_blob" {
-    for_each = fileset("./../apache-airflow/dags/azure_data_dude/etl_dags/", "*_test_dag.py")
-
-    name                   = "airflow/dags/${each.key}"
+    name                   = "airflow/dags/env_test_dag.py"
     storage_account_name   = azurerm_storage_account.airflow.name
     storage_container_name = azurerm_storage_container.dags.name
     type                   = "Block"
-    source                 = "./../apache-airflow/dags/azure_data_dude/etl_dags/${each.key}"
+    source                 = "${var.workspace}/apache-airflow/dags/azure_data_dude/etl_dags/env_test_dag.py"
 }
 
 resource "azurerm_data_factory_linked_service_azure_blob_storage" "airflow_dags" {

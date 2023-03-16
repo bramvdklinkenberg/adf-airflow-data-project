@@ -69,3 +69,7 @@ variable "airflow_version" {
     type = string
     default = "2.4.3"
 }
+
+variable "workspace" {
+    type = string
+}
