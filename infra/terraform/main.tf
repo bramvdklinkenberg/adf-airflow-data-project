@@ -83,6 +83,14 @@ resource "azurerm_storage_blob" "dags_blob" {
     source                 = "${var.workspace}/apache-airflow/dags/azure_data_dude/etl_dags/env_test_dag.py"
 }
 
+resource "azurerm_storage_blob" "plugins_blob" {
+    name                   = "airflow/plugins/test_plugin.py"
+    storage_account_name   = azurerm_storage_account.airflow.name
+    storage_container_name = azurerm_storage_container.dags.name
+    type                   = "Block"
+    source                 = "${var.workspace}/apache-airflow/dags/azure_data_dude/etl_dags/plugins/test_dag.py"
+}
+
 resource "azurerm_data_factory_linked_service_azure_blob_storage" "airflow_dags" {
     name = azurerm_storage_account.airflow.name
     data_factory_id = azurerm_data_factory.data_project_adf.id
