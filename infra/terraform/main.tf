@@ -88,7 +88,7 @@ resource "azurerm_storage_blob" "plugins_blob" {
     storage_account_name   = azurerm_storage_account.airflow.name
     storage_container_name = azurerm_storage_container.dags.name
     type                   = "Block"
-    source                 = "${var.workspace}/apache-airflow/dags/azure_data_dude/etl_dags/plugins/test_dag.py"
+    source                 = "${var.workspace}/apache-airflow/dags/azure_data_dude/etl_dags/plugins/test_plugin.py"
 }
 
 resource "azurerm_data_factory_linked_service_azure_blob_storage" "airflow_dags" {
